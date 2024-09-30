@@ -50,7 +50,7 @@ def handle_events():
                 key_state['RIGHT'] = False
 
 def move_character():
-    global pos_y, pos_x, frame
+    global pos_y, pos_x, frame,ide_dir
     frame = (frame + 1) % total_frames
 
     if key_state['UP']:
@@ -68,17 +68,29 @@ def move_character():
 
     if key_state['UP']:
         character.clip_draw(frame * char_w, 130, char_w, char_h, pos_x, pos_y, print_w, print_h)
+        ide_dir = 3
     elif key_state['DOWN']:
         character.clip_draw(frame * char_w, 390, char_w, char_h, pos_x, pos_y, print_w, print_h)
+        ide_dir = 0
     elif key_state['LEFT']:
         character.clip_draw(frame * char_w, 260, char_w, char_h, pos_x, pos_y, print_w, print_h)
+        ide_dir = 1
     elif key_state['RIGHT']:
         character.clip_draw(frame * char_w, 0, char_w, char_h, pos_x, pos_y, print_w, print_h)
+        ide_dir = 2
 
 def show_ide_animation():
-    global ide_frame
+    global ide_frame,ide_dir
     ide_frame = (ide_frame + 1) % ide_total_frames
-    character.clip_draw(ide_frame * char_w, 910, char_w, char_h, pos_x, pos_y, print_w, print_h)
+    if ide_dir == 0:
+        character.clip_draw(ide_frame * char_w, 910, char_w, char_h, pos_x, pos_y, print_w, print_h)
+    elif ide_dir == 1:
+        character.clip_draw(ide_frame * char_w, 780, char_w, char_h, pos_x, pos_y, print_w, print_h)
+    elif ide_dir == 2:
+        character.clip_draw(ide_frame * char_w, 520, char_w, char_h, pos_x, pos_y, print_w, print_h)
+    elif ide_dir == 3:
+        character.clip_draw(0, 650, char_w, char_h, pos_x, pos_y, print_w, print_h)
+
     delay(0.1)
 
 while running:
